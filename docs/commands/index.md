@@ -36,5 +36,4 @@ sequenceDiagram
     Chains-->>Bot: цепочка
     Bot-->>User: У Лукоморья дуб зелёный...
     deactivate Bot
-
 ```
