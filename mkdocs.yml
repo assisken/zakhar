@@ -1,0 +1,17 @@
+site_name: My Docs
+theme:
+  name: material
+markdown_extensions:
+  - pymdownx.superfences:
+      preserve_tabs: true
+      custom_fences:
+       - name: mermaid
+         class: mermaid
+         format: !!python/name:pymdownx.superfences.fence_div_format
+
+extra_javascript:
+  - https://unpkg.com/mermaid@9.1.3/dist/mermaid.min.js
+
+nav:
+  - ./index.md
+  - Команды: ./features/index.md
