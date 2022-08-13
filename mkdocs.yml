@@ -14,4 +14,5 @@ extra_javascript:
 
 nav:
   - Главная: ./index.md
-  - Команды: ./commands/index.md
+  - Команды: ./commands.md
+  - Интерактивы: ./interactives.md
