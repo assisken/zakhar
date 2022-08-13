@@ -43,13 +43,17 @@ mod tests {
     use super::{MarkovChains, MarkovChainsStruct};
     use test_case::test_case;
 
+    // I really can't read String::from in parameterized test, so I short
+    // TODO: return &str or find more readable way
+    const S: fn(&'static str) -> String = String::from;
+
     #[test_case("" => HashMap::new(); "when empty")]
     #[test_case("A purple a green and a kite" => HashMap::from([
-        (String::from("a"), String::from("purple green kite")),
-        (String::from("purple"), String::from("a")),
-        (String::from("green"), String::from("and")),
-        (String::from("and"), String::from("a")),
-    ]); "with some words")]
+        (S("a"), S("purple green kite")),
+        (S("purple"), S("a")),
+        (S("green"), S("and")),
+        (S("and"), S("a")),
+        ]); "with some words")]
     #[test_case("foo" => HashMap::new(); "the last word are ignored")]
     fn word_adding(sentence: &str) -> HashMap<String, String> {
         let mut mc = MarkovChainsStruct::new();
