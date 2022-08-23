@@ -4,43 +4,59 @@
 
 ```mermaid
 sequenceDiagram
-    actor User
-    participant Bot
-    participant Discord as Discord API
+    actor U as Пользователь
+    participant B as Бот
+    participant D as Discord API
 
-    User->>Bot: Захар, как меня зовут?
-    activate Bot
-    Bot->>Discord: поменяй nickname
-    activate Discord
-    Discord-->>Bot: Успех
-    deactivate Discord
-    Bot-->>User: Тебя зовут жаренная ватрушка
-    deactivate Bot
+    U->>+B: Как меня зовут?
+
+    B->>+D: Поменяй ему nickname
+    D-->>-B: Готово
+
+    B-->>-U: Тебя зовут: жаренная ватрушка
 ```
 
 ## Скажи что-нибудь
 
 ```mermaid
 sequenceDiagram
-    actor User
-    participant Bot
-    participant Chains as Цепи Маркова
+    actor U as Пользователь
+    participant B as Бот
+    participant C as Цепи Маркова
 
-    User-)Bot: любое сообщение
-    Bot->>Chains: добавь слова
-    Chains->>Chains: обнови цепочку
+    U-)B: Любое сообщение
+    B->>C: Добавить слова
+    C->>C: Обновить цепочку
 
-    User->>Bot: Захар, скажи что-нибудь
-    activate Bot
-    Bot->>Chains: создай цепочку
-    Chains-->>Bot: цепочка
-    Bot-->>User: У Лукоморья дуб зелёный...
-    deactivate Bot
+    U->>+B: Скажи что-нибудь!
+    B->>+C: Создай цепочку, пж
+    C-->>-B: Цепочка
+    B-->>-U: У Лукоморья дуб зелёный...
 ```
 
 ## Карусель
 
 Пользователя, находящегося в голосовом канале, перекидывает по всем доступным для него каналам в случаном порядке. Прекращается либо по таймеру (возможный аргумент команды), либо по вводу команды-отмены.
+
+```mermaid
+sequenceDiagram
+    actor U as Пользователь
+    participant B as Бот
+    participant D as Discord API
+
+    Note over U: Находится в голосовом канале
+
+    U->>+B: Хочу кататься!
+    B-->>U: Понял тебя
+
+    loop Карусель
+    B->>+D: Перекинь его ещё в какой-нибудь канал
+    D-->>-B: Готово
+    end
+
+    U->>B: Меня укачивает!
+    B-->>-U: Здорово!
+```
 
 ## Розыгрыш
 
