@@ -9,7 +9,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.2">
     
     
       
@@ -17,7 +17,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.69437709.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
@@ -36,7 +36,7 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -241,10 +241,46 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    Карусель
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    Розыгрыш
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    Брак
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interactives/" class="md-nav__link">
+        Интерактивы
+      </a>
     </li>
   
 
@@ -289,6 +325,27 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    Карусель
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    Розыгрыш
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    Брак
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -305,35 +362,89 @@
 
 <h1 id="_1">Команды</h1>
 <h2 id="_2">Как меня зовут</h2>
+<p>Бот изменяет nickname пользователя, вызвавшего данную команду, на случайный из перечня (либо генерируемый каким-либо образом).</p>
 <div class="mermaid">sequenceDiagram
-    actor User
-    participant Bot
-    participant Discord as Discord API
+    actor U as Пользователь
+    participant B as Бот
+    participant D as Discord API
 
-    User-&gt;&gt;Bot: Захар, как меня зовут?
-    activate Bot
-    Bot-&gt;&gt;Discord: поменяй nickname
-    activate Discord
-    Discord--&gt;&gt;Bot: Успех
-    deactivate Discord
-    Bot--&gt;&gt;User: Тебя зовут жаренная ватрушка
-    deactivate Bot</div>
+    U-&gt;&gt;+B: Как меня зовут?
+
+    B-&gt;&gt;+D: Поменяй ему nickname
+    D--&gt;&gt;-B: Готово
+
+    B--&gt;&gt;-U: Тебя зовут: жаренная ватрушка</div>
 <h2 id="-">Скажи что-нибудь</h2>
+<p>По запросу пользователя бот генерирует случайную фразу, используя цепи Маркова.</p>
 <div class="mermaid">sequenceDiagram
-    actor User
-    participant Bot
-    participant Chains as Цепи Маркова
+    actor U as Пользователь
+    participant B as Бот
+    participant C as Цепи Маркова
 
-    User-)Bot: любое сообщение
-    Bot-&gt;&gt;Chains: добавь слова
-    Chains-&gt;&gt;Chains: обнови цепочку
+    U-&gt;&gt;B: Любое сообщение
+    B-&gt;&gt;C: Добавить слова
+    C-&gt;&gt;C: Обновить цепочку
 
-    User-&gt;&gt;Bot: Захар, скажи что-нибудь
-    activate Bot
-    Bot-&gt;&gt;Chains: создай цепочку
-    Chains--&gt;&gt;Bot: цепочка
-    Bot--&gt;&gt;User: У Лукоморья дуб зелёный...
-    deactivate Bot</div>
+    U-&gt;&gt;+B: Скажи что-нибудь!
+    B-&gt;&gt;+C: Создай цепочку, пж
+    C--&gt;&gt;-B: Цепочка
+    B--&gt;&gt;-U: У Лукоморья дуб зелёный...</div>
+<h2 id="_3">Карусель</h2>
+<p>Пользователя, находящегося в голосовом канале, перекидывает по всем доступным для него каналам в случаном порядке. Прекращается либо по таймеру (возможный аргумент команды), либо по вводу команды-отмены.</p>
+<div class="mermaid">sequenceDiagram
+    actor U as Пользователь
+    participant B as Бот
+    participant D as Discord API
+
+    Note over U: Находится в голосовом канале
+
+    U-&gt;&gt;+B: Хочу кататься!
+    B--&gt;&gt;U: Понял тебя
+
+    loop Карусель
+    B-&gt;&gt;+D: Перекинь его ещё в какой-нибудь канал
+    D--&gt;&gt;-B: Готово
+    end
+
+    U-&gt;&gt;B: Меня укачивает!
+    B--&gt;&gt;-U: Здорово!</div>
+<h2 id="_4">Розыгрыш</h2>
+<p>Наугад (либо с помощью аргумента команды указывается конкретный пользователь) выбирается голосовой канал, куда подключается бот и начинает проигрывать "АТВИНТА (Extreme Bass Boost)" (или нечто подобное). Аудио дорожки могут выбираться наугад из банка. Длительность дорожки не должна быть слишком большой - в противном случае будет уже не смешно.</p>
+<div class="mermaid">sequenceDiagram
+    actor U as Пользователь
+    participant B as Бот
+    participant D as Discord API
+
+    U-&gt;&gt;B: Давай разыграем Александра!
+    activate B
+    B-&gt;&gt;+D: Удали сообщение пользователя
+    D--&gt;&gt;-B: Готово
+    B-&gt;&gt;+D: В каком голосовом канале находится Александр?
+    D--&gt;&gt;-B: Вот в этом
+    B-&gt;&gt;+D: Подключаемся к нему и ставим вот этот трек
+    D--&gt;&gt;-B: Готово
+    deactivate B
+
+    Note over B: По окончании проигрывания трека бот отключается из голосового канала</div>
+<h2 id="_5">Брак</h2>
+<p>Система брака. В качестве аргумента команды указывается партнёр (либо оба партнёра). Далее каждый из кандидатов должен выразить своё согласие (нажатием на кнопку, вводом ключевой фразы...). Бот хранит список пар.</p>
+<div class="mermaid">sequenceDiagram
+    actor U1 as Пользователь 1
+    participant B as Бот
+    actor U2 as Пользователь 2
+
+    U1-&gt;&gt;+B: Жениться бы мне на Пользователе 2...
+    B--&gt;&gt;U1: Ты уверен?
+    U1-&gt;&gt;B: Да!
+    B-&gt;&gt;U2: Ты согласна?
+    U2--&gt;&gt;B: Оф кокос!
+
+    B-&gt;&gt;-B: Запомнить пару
+
+    Note over B: Бот объявляет в чате новую пару</div>
+
+
+
 
               
             </article>
@@ -364,6 +475,21 @@
         </a>
       
       
+        
+        <a href="../interactives/" class="md-footer__link md-footer__link--next" aria-label="Next: Интерактивы" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Интерактивы
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
     </nav>
   
   <div class="md-footer-meta md-typeset">
@@ -386,10 +512,11 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.ecf98df9.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.6c7ad80a.min.js"></script>
+      <script src="../assets/javascripts/bundle.9c69f0bc.min.js"></script>
       
         <script src="https://unpkg.com/mermaid@9.1.3/dist/mermaid.min.js"></script>
       
